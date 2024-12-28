@@ -42,7 +42,7 @@ func SendDriverEnrolmentPoll() error {
 			{
 				Text: "Недеља 15 ч. - 17 ч.",
 			}, {
-				Text: "°Увид у стање°: види пријављене",
+				Text: "°Увид",
 			},
 		}}
 	//TODO: Replace IDs with the real values
