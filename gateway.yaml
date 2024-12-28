@@ -1,0 +1,63 @@
+openapi: 3.0.0
+info:
+    description: API gateway for Compound Server API which contains various enpoints
+        linking to cloud functions implemenenting the investment ideas functionality
+    title: Compound Server API
+    version: 1.0.0
+servers:
+    - url: https://d5d8uugk950o7qa1ofv0.apigw.yandexcloud.net
+paths:
+    /health-check:
+        get:
+            x-yc-apigateway-integration:
+                type: dummy
+                content:
+                    "*": The API is available!
+                http_code: 200
+                http_headers:
+                    Content-Type: text/plain
+            responses:
+                "200":
+                    content:
+                        text/plain:
+                            schema:
+                                type: string
+                    description: Returns a dummy response. Can be used for health checks.
+
+    /sk-telegram-bot:
+        post:
+            x-yc-apigateway-integration:
+                function_id: d4e44rlhpvaupjgt6ihp
+                type: cloud_functions
+            responses:
+                "200":
+                    content:
+                        text/json:
+                            schema:
+                                $ref: "#/components/schemas/ResponseBody"
+                    description: Returns a message indicating that the cloud function successfully completed execution
+
+components:
+    schemas:
+        ResponseBody:
+            properties:
+                statusCode:
+                    type: integer
+                body:
+                    type: string
+        #     targetPrice:
+        #       type: number
+        #     upside:
+        #       type: number
+        #     currency:
+        #       type: string
+        #   type: object
+        # InvestmentIdeas:
+        #   properties:
+        #     author:
+        #       type: string
+        #     ideas:
+        #       items:
+        #         $ref: '#/components/schemas/InvestmentIdea'
+        #       type: array
+        #   type: object
