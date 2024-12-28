@@ -45,7 +45,7 @@ func SendDriverEnrolmentPoll() error {
 				Text: "Увид",
 			},
 		}}
-	//TODO: Replace IDs with the real values
+	//TODO: Replace IDs with the real value
 	solidarDriversChat := tele.Chat{ID: -1002301646854} //ID of the SK Vozaci chat
 	pollTopicID := 2                                    //ID of the topic where drivers' polls are posted
 	message, err := poll.Send(bot, &solidarDriversChat, &tele.SendOptions{ThreadID: pollTopicID})
