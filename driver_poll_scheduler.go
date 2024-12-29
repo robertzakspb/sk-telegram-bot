@@ -46,7 +46,7 @@ func SendDriverEnrolmentPoll() error {
 			},
 		}}
 		
-	solidarDriversChat := tele.Chat{ID: -4765828100} //ID of the SK Vozaci chat
+	solidarDriversChat := tele.Chat{ID: -1001721324233} //ID of the SK Vozaci chat
 	message, err := poll.Send(bot, &solidarDriversChat, &tele.SendOptions{})
 	if err != nil {
 		fmt.Println(err)
