@@ -21,7 +21,7 @@ jobs:
                   runtime: "golang121"
                   memory: "128Mb"
                   entrypoint: "main.YandexCFHandler"
-                #   service-account: "aje56v2007a3b8t3dd8m"
+                  service-account: "ajers1h0rubfdvd5hq4t"
                 #   secrets: |
                 #         SK_TELEGRAM_BOT_TOKEN=e6q1ocmrhmu2s1jshu20/1.0/SK_TELEGRAM_BOT_TOKEN
                   include: ./
