@@ -54,7 +54,7 @@ func cloudTriggerHandler(payload CloudTriggerPayload) {
 			fmt.Println("An error occurred while attempting to send the next drivers' poll: ", err)
 		}
 	default:
-		fmt.Println("Anknown cloud trigger payload: ", payload.Details.Payload)
+		fmt.Println("Unknown cloud trigger payload: ", payload.Details.Payload)
 	}
 }
 
