@@ -11,9 +11,9 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v3
-            - name: Deploy Function
+            - name: YC Function deploy
               id: sls-func
-              uses: yc-actions/yc-sls-function@v2
+              uses: yc-actions/yc-sls-function@v2.12.0
               with:
                   yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
                   folder-id: "b1gavt7en80es8oo1hq2"
