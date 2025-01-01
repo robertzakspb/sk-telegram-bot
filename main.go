@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"os"
 
 	tele "gopkg.in/telebot.v4"
 )
@@ -11,6 +12,8 @@ import (
 func main() {}
 
 func YandexCFHandler(ctx context.Context, request []byte) ([]byte, error) {
+	fmt.Println("Telegram token: ")
+	fmt.Println(os.Getenv("SK_TELEGRAM_BOT_TOKEN"))
 	//Checking if the payload is provided by the cloud trigger
 	requestBody := CloudTriggerPayload{}
 	err := json.Unmarshal(request, &requestBody)
