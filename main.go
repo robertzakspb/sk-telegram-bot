@@ -46,15 +46,15 @@ func cloudTriggerHandler(payload CloudTriggerPayload) {
 	case "generateSKMealDistributionPolls":
 		err := SendMealDistributionEnrolmentPoll()
 		if err != nil {
-			fmt.Println("an error has occurred while attempting to send the meal distribution poll: ", err)
+			fmt.Println("An error has occurred while attempting to send the meal distribution poll: ", err)
 		}
 	case "generateDriversPolls":
 		err := SendDriverEnrolmentPoll()
 		if err != nil {
-			fmt.Println("an error occurred while attempting to send the next drivers' poll: ", err)
+			fmt.Println("An error occurred while attempting to send the next drivers' poll: ", err)
 		}
 	default:
-		fmt.Println("unknown cloud trigger payload: ", payload.Details.Payload)
+		fmt.Println("Anknown cloud trigger payload: ", payload.Details.Payload)
 	}
 }
 
