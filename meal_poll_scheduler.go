@@ -74,7 +74,7 @@ func generateMealDistributionTelegramPoll() ([]tele.Poll, error) {
 					Text: "°РЕД (1-2)°: водим рачуна о реду од 15.30 ч. (током поделе треба две особе, пре једна)",
 				},
 				{
-					Text: "°ХЛЕБ (1-2)°: из продавнице \"Расина\"",
+					Text: breadPollOptionTitle(date),
 				},
 				{
 					Text: "°СТО И РУКСАК (1-2)°: из \"ДЦ Кров\"",
@@ -111,7 +111,7 @@ func nextDistributionDates() []time.Time {
 	today := time.Now()
 	//This logic assumes that the poll is being scheduled on Sundays
 	for _, distributionDay := range mealDistibutionDays {
-		if distributionDay.String() == "Sunday" {
+		if distributionDay.String() == "Sunday" { //As Sunday is 0 in Go, we need to add 7
 			nextSunday := today.AddDate(0, 0, 7)
 			nextDistributionDates = append(nextDistributionDates, nextSunday)
 		} else {
@@ -160,4 +160,17 @@ func requiredNumberOfPeople(date time.Time) string {
 	} else {
 		return "(5)"
 	}
+}
+
+func breadPollOptionTitle(date time.Time) string {
+	title := "°ХЛЕБ (1-2)°" 
+
+	switch date.Weekday().String() {
+	case "Wednesday", "Sunday": 
+		title += ": из ДЦ \"Кров\""
+	case "Saturday": 
+		title += ": из продавнице \"Расина\""
+	}
+
+	return title
 }
