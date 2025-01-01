@@ -166,9 +166,9 @@ func breadPollOptionTitle(date time.Time) string {
 	title := "°ХЛЕБ (1-2)°" 
 
 	switch date.Weekday().String() {
-	case "Wednesday", "Sunday": 
+	case "Sunday": 
 		title += ": из ДЦ \"Кров\""
-	case "Saturday": 
+	case "Saturday", "Wednesday": 
 		title += ": из продавнице \"Расина\""
 	}
 

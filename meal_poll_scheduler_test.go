@@ -7,12 +7,12 @@ import (
 
 func TestBreadPollOptionTitleGeneration(t *testing.T) {
 	//Arrange
-	randomWednesday := time.Date(2025, 1, 1, 0,0,0,0, time.UTC)
 	randomSunday := time.Date(2025, 1, 5, 0,0,0,0, time.UTC)
-	expectedWednesdayOrSundayTitle := "°ХЛЕБ (1-2)°: из ДЦ \"Кров\""
+	expectedSundayTitle := "°ХЛЕБ (1-2)°: из ДЦ \"Кров\""
 
+	randomWednesday := time.Date(2025, 1, 1, 0,0,0,0, time.UTC)
 	randomSaturday := time.Date(2025, 1, 4, 0,0,0,0, time.UTC)
-	expectedSaturdayTitle := "°ХЛЕБ (1-2)°: из продавнице \"Расина\""
+	expectedSaturdayOrWednesdayTitle := "°ХЛЕБ (1-2)°: из продавнице \"Расина\""
 	
 	//Test for a non-distribution date
 	randomMonday := time.Date(2024, 12, 30, 0,0,0,0, time.UTC)
@@ -30,15 +30,15 @@ func TestBreadPollOptionTitleGeneration(t *testing.T) {
 		t.Fatalf("Expected title for a non-distribution date: %v; actual: %v",expectedNonDistributionDateTitle, nonDistributionDateTitle )
 	}
 
-	if wednesdayTitle != expectedWednesdayOrSundayTitle {
-		t.Fatalf("Expected Wednesday title: %v; actual: %v",expectedWednesdayOrSundayTitle, wednesdayTitle )
+	if wednesdayTitle != expectedSaturdayOrWednesdayTitle {
+		t.Fatalf("Expected Wednesday title: %v; actual: %v",expectedSaturdayOrWednesdayTitle, wednesdayTitle )
 	}
 
-	if saturdayTitle != expectedSaturdayTitle {
-		t.Fatalf("Expected Saturday title: %v; actual: %v",expectedWednesdayOrSundayTitle, saturdayTitle )
+	if saturdayTitle != expectedSaturdayOrWednesdayTitle {
+		t.Fatalf("Expected Saturday title: %v; actual: %v",expectedSaturdayOrWednesdayTitle, saturdayTitle )
 	}
 
-	if sundayTitle != expectedWednesdayOrSundayTitle {
-		t.Fatalf("Expected Sunday title: %v; actual: %v",expectedWednesdayOrSundayTitle, sundayTitle )
+	if sundayTitle != expectedSundayTitle {
+		t.Fatalf("Expected Sunday title: %v; actual: %v",expectedSundayTitle, sundayTitle )
 	}
 }
