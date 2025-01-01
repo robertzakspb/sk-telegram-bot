@@ -14,7 +14,6 @@ func TestBreadPollOptionTitleGeneration(t *testing.T) {
 	randomSaturday := time.Date(2025, 1, 4, 0,0,0,0, time.UTC)
 	expectedSaturdayOrWednesdayTitle := "°ХЛЕБ (1-2)°: из продавнице \"Расина\""
 	
-	//Test for a non-distribution date
 	randomMonday := time.Date(2024, 12, 30, 0,0,0,0, time.UTC)
 	expectedNonDistributionDateTitle := "°ХЛЕБ (1-2)°"
 
