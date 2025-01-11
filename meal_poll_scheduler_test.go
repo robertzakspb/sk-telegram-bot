@@ -6,42 +6,66 @@ import (
 )
 
 func Test_BreadPollOptionTitleGeneration(t *testing.T) {
-	//Arrange
-	randomSunday := time.Date(2025, 1, 5, 0, 0, 0, 0, time.UTC)
-	expectedSundayTitle := "°ХЛЕБ (1-2)°: из ДЦ \"Кров\""
 
-	randomWednesday := time.Date(2025, 1, 1, 0, 0, 0, 0, time.UTC)
-	randomSaturday := time.Date(2025, 1, 4, 0, 0, 0, 0, time.UTC)
-	expectedSaturdayOrWednesdayTitle := "°ХЛЕБ (1-2)°: из продавнице \"Расина\""
+	const expectedSaturdayOrWednesdayTitle = "°ХЛЕБ (1-2)°: из продавнице \"Расина\""
 
-	randomMonday := time.Date(2024, 12, 30, 0, 0, 0, 0, time.UTC)
-	expectedNonDistributionDateTitle := "°ХЛЕБ (1-2)°"
+	t.Run("Checking the Wednesday output", func(t *testing.T) {
+		//Arrange
+		randomWednesday := time.Date(2025, 1, 1, 0, 0, 0, 0, time.UTC)
 
-	//Act
-	wednesdayTitle := breadPollOptionTitle(randomWednesday)
-	saturdayTitle := breadPollOptionTitle(randomSaturday)
-	sundayTitle := breadPollOptionTitle(randomSunday)
-	nonDistributionDateTitle := breadPollOptionTitle(randomMonday)
+		//Act
+		wednesdayTitle := breadPollOptionTitle(randomWednesday)
 
-	//Assert
-	if nonDistributionDateTitle != expectedNonDistributionDateTitle {
-		t.Fatalf("Expected title for a non-distribution date: %v; actual: %v", expectedNonDistributionDateTitle, nonDistributionDateTitle)
-	}
+		//Assert
+		if wednesdayTitle != expectedSaturdayOrWednesdayTitle {
+			t.Fatalf("Expected Wednesday title: %v; actual: %v", expectedSaturdayOrWednesdayTitle, wednesdayTitle)
+		}
+	})
 
-	if wednesdayTitle != expectedSaturdayOrWednesdayTitle {
-		t.Fatalf("Expected Wednesday title: %v; actual: %v", expectedSaturdayOrWednesdayTitle, wednesdayTitle)
-	}
+	t.Run("Checking the Saturday output", func(t *testing.T) {
+		//Arrange
+		randomSaturday := time.Date(2025, 1, 4, 0, 0, 0, 0, time.UTC)
 
-	if saturdayTitle != expectedSaturdayOrWednesdayTitle {
-		t.Fatalf("Expected Saturday title: %v; actual: %v", expectedSaturdayOrWednesdayTitle, saturdayTitle)
-	}
+		//Act
+		saturdayTitle := breadPollOptionTitle(randomSaturday)
 
-	if sundayTitle != expectedSundayTitle {
-		t.Fatalf("Expected Sunday title: %v; actual: %v", expectedSundayTitle, sundayTitle)
-	}
+		//Assert
+		if saturdayTitle != expectedSaturdayOrWednesdayTitle {
+			t.Fatalf("Expected Saturday title: %v; actual: %v", expectedSaturdayOrWednesdayTitle, saturdayTitle)
+		}
+	})
+
+	t.Run("Checking the Sunday output", func(t *testing.T) {
+		//Arrange
+		randomSunday := time.Date(2025, 1, 5, 0, 0, 0, 0, time.UTC)
+		const expectedSundayTitle = "°ХЛЕБ (1-2)°: из ДЦ \"Кров\""
+
+		//Act
+		sundayTitle := breadPollOptionTitle(randomSunday)
+
+		//Assert
+		if sundayTitle != expectedSundayTitle {
+			t.Fatalf("Expected Sunday title: %v; actual: %v", expectedSundayTitle, sundayTitle)
+		}
+	})
+
+	t.Run("Checking the non-distribution day output", func(t *testing.T) {
+		//Arrange
+		randomMonday := time.Date(2024, 12, 30, 0, 0, 0, 0, time.UTC)
+		const expectedNonDistributionDateTitle = "°ХЛЕБ (1-2)°"
+
+		//Act
+		nonDistributionDateTitle := breadPollOptionTitle(randomMonday)
+
+		//Assert
+		if nonDistributionDateTitle != expectedNonDistributionDateTitle {
+			t.Fatalf("Expected title for a non-distribution date: %v; actual: %v", expectedNonDistributionDateTitle, nonDistributionDateTitle)
+		}
+	})
+
 }
 
-//Tests if the number of required people on different dates is properly calculated
+// Tests if the number of required people on different dates is properly calculated
 func Test_RequiredNumberOfPeople(t *testing.T) {
 	//Arrange
 	randomSunday := time.Date(2025, 1, 5, 0, 0, 0, 0, time.UTC)
@@ -62,8 +86,8 @@ func Test_RequiredNumberOfPeople(t *testing.T) {
 	}
 }
 
-//Tests if the drink distribution day (Sunday) is properly determined
-func Test_ShouldDistributeDrinks(t * testing.T) {
+// Tests if the drink distribution day (Sunday) is properly determined
+func Test_ShouldDistributeDrinks(t *testing.T) {
 	//Arrange
 	randomSunday := time.Date(2025, 1, 5, 0, 0, 0, 0, time.UTC)
 	randomWednesday := time.Date(2025, 1, 1, 0, 0, 0, 0, time.UTC)
@@ -78,7 +102,7 @@ func Test_ShouldDistributeDrinks(t * testing.T) {
 	}
 }
 
-func Test_MealDistributionPollTitle(t * testing.T) {
+func Test_MealDistributionPollTitle(t *testing.T) {
 	//Arrange
 	randomWednesday := time.Date(2025, 1, 1, 0, 0, 0, 0, time.UTC)
 	expectedWednesdayPollTitle := "СРЕДА 1.1.2025"
