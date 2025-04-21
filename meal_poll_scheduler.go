@@ -87,9 +87,6 @@ func generateMealDistributionTelegramPoll() ([]tele.Poll, error) {
 				{
 					Text: "°ПОДЕЛА (3)°: код стола сам",
 				},
-				{
-					Text: "°СМЕЋЕ°(1)",
-				},
 			},
 		}
 		if shouldDistributeDrink(date) {
