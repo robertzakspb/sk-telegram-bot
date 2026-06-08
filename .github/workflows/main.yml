@@ -18,7 +18,7 @@ jobs:
                   yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
                   folder-id: "b1gavt7en80es8oo1hq2"
                   function-name: "sk-telegram-bot-ycf"
-                  runtime: "golang121"
+                  runtime: "golang123"
                   memory: "128Mb"
                   entrypoint: "main.YandexCFHandler"
                   service-account: "ajers1h0rubfdvd5hq4t"
