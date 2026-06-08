@@ -22,7 +22,7 @@ func SendDriverEnrolmentPoll() error {
 	}
 
 	poll := tele.Poll{
-		Question:        generateDriverPollTitle(),
+		Question:        generateDriverPollTitle(time.Now()),
 		MultipleAnswers: true,
 		Anonymous:       false,
 		Type:            tele.PollRegular,
@@ -45,7 +45,7 @@ func SendDriverEnrolmentPoll() error {
 				Text: "Увид",
 			},
 		}}
-		
+
 	solidarDriversChat := tele.Chat{ID: -1001721324233} //ID of the SK Vozaci chat
 	message, err := poll.Send(bot, &solidarDriversChat, &tele.SendOptions{})
 	if err != nil {
@@ -58,11 +58,15 @@ func SendDriverEnrolmentPoll() error {
 	return nil
 }
 
-func generateDriverPollTitle() string {
-	currentDate := time.Now() //Must be Sunday
-	nextMonday := currentDate.AddDate(0, 0, 1)
-	nextSunday := currentDate.AddDate(0, 0, 7)
+func generateDriverPollTitle(currentDate time.Time) string {
+	//Polls must be generated on Sundays; however, we added a fallback in case the poll was generated during the week
+	startDate := getThisOrNextMonday(currentDate)
+	endDate := startDate.AddDate(0, 0, 6)
 
-	pollTitle := strconv.Itoa(nextMonday.Day()) + "." + strconv.Itoa(int(nextMonday.Month())) + " – " + strconv.Itoa(nextSunday.Day()) + "." + strconv.Itoa(int(nextSunday.Month()))
+	pollTitle := strconv.Itoa(startDate.Day()) + "." + strconv.Itoa(int(startDate.Month())) + " – " + strconv.Itoa(endDate.Day()) + "." + strconv.Itoa(int(endDate.Month()))
 	return pollTitle
+}
+
+func getThisOrNextMonday(fromDate time.Time) time.Time {
+	return fromDate.AddDate(0, 0, -int(fromDate.Weekday())+1)
 }
