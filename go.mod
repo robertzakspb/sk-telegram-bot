@@ -1,7 +1,5 @@
 module github.com/compoundinvest/sk-telegram-bot
 
-go 1.21.5
+go 1.26.4
 
-require (
-	gopkg.in/telebot.v4 v4.0.0-beta.4 // indirect
-)
+require gopkg.in/telebot.v4 v4.0.0-beta.4
