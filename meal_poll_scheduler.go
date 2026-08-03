@@ -25,6 +25,7 @@ type CloudTriggerPayload struct {
 }
 
 func SendMealDistributionEnrolmentPoll() error {
+	fmt.Println("Starting the meal distribution poll generations")
 	pref := tele.Settings{
 		Token:   os.Getenv("SK_TELEGRAM_BOT_TOKEN"),
 		Verbose: true,
@@ -32,13 +33,13 @@ func SendMealDistributionEnrolmentPoll() error {
 
 	bot, err := tele.NewBot(pref)
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("Error while initializing the tele bot: ", err)
 		return err
 	}
 
 	weeklyPolls, err := generateMealDistributionTelegramPoll()
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("Error while generating the poll: ", err)
 		return err
 	}
 
@@ -47,10 +48,10 @@ func SendMealDistributionEnrolmentPoll() error {
 		pollTopicID := 2                                    //ID of the topic where meal distribution polls are posted
 		message, err := poll.Send(bot, &solidarKitchenChat, &tele.SendOptions{ThreadID: pollTopicID})
 		if err != nil {
-			fmt.Println(err)
+			fmt.Println("Error while sending the poll to Telegram API: ", err)
 		}
 		if message != nil {
-			fmt.Println(message)
+			fmt.Println("Message returned by the Telegram API: ",message)
 		}
 
 	}
@@ -106,7 +107,7 @@ func nextDistributionDates() []time.Time {
 
 	nextDistributionDates := []time.Time{}
 	today := time.Now()
-	//This logic assumes that the poll is being scheduled on Sundays
+	
 	for _, distributionDay := range mealDistibutionDays {
 		if distributionDay.String() == "Sunday" { //As Sunday is 0 in Go, we need to add 7
 			nextSunday := today.AddDate(0, 0, 7)
@@ -160,12 +161,12 @@ func requiredNumberOfPeople(date time.Time) string {
 }
 
 func breadPollOptionTitle(date time.Time) string {
-	title := "°ХЛЕБ (1-2)°" 
+	title := "°ХЛЕБ (1-2)°"
 
 	switch date.Weekday().String() {
-	case "Sunday": 
+	case "Sunday":
 		title += ": из ДЦ \"Кров\""
-	case "Saturday", "Wednesday": 
+	case "Saturday", "Wednesday":
 		title += ": из продавнице \"Расина\""
 	}
 
