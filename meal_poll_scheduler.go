@@ -43,19 +43,21 @@ func SendMealDistributionEnrolmentPoll() error {
 		return err
 	}
 
-	for _, poll := range weeklyPolls {
+	for i, poll := range weeklyPolls {
 		solidarKitchenChat := tele.Chat{ID: -1002011462579} //ID of the SK Terenci chat
 		pollTopicID := 2                                    //ID of the topic where meal distribution polls are posted
+		fmt.Println("Sending poll ", strconv.Itoa(i), " out of ", strconv.Itoa(len(weeklyPolls)), " at: ", time.Now().String())
 		message, err := poll.Send(bot, &solidarKitchenChat, &tele.SendOptions{ThreadID: pollTopicID})
 		if err != nil {
 			fmt.Println("Error while sending the poll to Telegram API: ", err)
 		}
 		if message != nil {
-			fmt.Println("Message returned by the Telegram API: ",message)
+			fmt.Println("Message returned by the Telegram API: ", message)
 		}
+		fmt.Println("Sent the meal distribution poll (", strconv.Itoa(i), " out of ", strconv.Itoa(len(weeklyPolls)), ")")
 	}
 
-	fmt.Println("Successfully sent the meal distribution poll")
+	fmt.Println("Completing the poll sending")
 
 	return nil
 }
@@ -108,7 +110,7 @@ func nextDistributionDates() []time.Time {
 
 	nextDistributionDates := []time.Time{}
 	today := time.Now()
-	
+
 	for _, distributionDay := range mealDistibutionDays {
 		if distributionDay.String() == "Sunday" { //As Sunday is 0 in Go, we need to add 7
 			nextSunday := today.AddDate(0, 0, 7)
