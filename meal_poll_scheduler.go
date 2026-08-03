@@ -65,7 +65,7 @@ func SendMealDistributionEnrolmentPoll() error {
 func generateMealDistributionTelegramPoll() ([]tele.Poll, error) {
 
 	weeklyPolls := []tele.Poll{}
-	for _, date := range nextDistributionDates() {
+	for _, date := range nextDistributionDates(time.Now()) {
 		poll := tele.Poll{
 			Question:        generateMealDistributionPollTitle(date),
 			MultipleAnswers: true,
@@ -105,22 +105,24 @@ func generateMealDistributionTelegramPoll() ([]tele.Poll, error) {
 
 }
 
-func nextDistributionDates() []time.Time {
-	mealDistibutionDays := [...]time.Weekday{3, 6, 0}
+func nextDistributionDates(today time.Time) []time.Time {
+	wednesday := getThisWednesday(today)
+	saturday := wednesday.AddDate(0, 0, 3)
+	sunday := saturday.AddDate(0, 0, 1)
+	mealDistibutionDates := []time.Time{wednesday, saturday, sunday}
 
-	nextDistributionDates := []time.Time{}
-	today := time.Now()
+	return mealDistibutionDates
+}
 
-	for _, distributionDay := range mealDistibutionDays {
-		if distributionDay.String() == "Sunday" { //As Sunday is 0 in Go, we need to add 7
-			nextSunday := today.AddDate(0, 0, 7)
-			nextDistributionDates = append(nextDistributionDates, nextSunday)
-		} else {
-			nextDate := today.AddDate(0, 0, int(distributionDay))
-			nextDistributionDates = append(nextDistributionDates, nextDate)
-		}
-	}
-	return nextDistributionDates
+// This function returns the date of the Wednesday following the provided date
+func getThisWednesday(today time.Time) time.Time {
+	year, month, day := today.Date()
+	todayAtMidnight := time.Date(year, month, day, 0, 0, 0, 0, time.UTC)
+
+	numberOfDaysBetweenTodayAndWednesday := time.Wednesday - todayAtMidnight.Weekday()
+	nextWednesday := today.AddDate(0, 0, int(numberOfDaysBetweenTodayAndWednesday))
+	
+	return nextWednesday
 }
 
 func generateMealDistributionPollTitle(date time.Time) string {

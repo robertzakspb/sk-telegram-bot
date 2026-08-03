@@ -127,3 +127,102 @@ func Test_MealDistributionPollTitle(t *testing.T) {
 		t.Fatalf("Incorrect poll title. Expected: %v; actual: %v", expectedSundayPollTitle, generateMealDistributionPollTitle(randomSunday))
 	}
 }
+
+func Test_MealDistributionDates_OnMonday(t *testing.T) {
+	randomMonday := time.Date(2026, 8, 3, 0, 0, 0, 0, time.UTC)
+	followingWednesday := time.Date(2026, 8, 5, 0, 0, 0, 0, time.UTC)
+	followingThursday := time.Date(2026, 8, 8, 0, 0, 0, 0, time.UTC)
+	followingFriday := time.Date(2026, 8, 9, 0, 0, 0, 0, time.UTC)
+
+	pollDates := nextDistributionDates(randomMonday)
+
+	if len(pollDates) != 3 { //We expect exactly 3 polls
+		t.Fatalf("Incorrect poll count. Expected: %v; actual: %v", 3, len(pollDates))
+	}
+	if pollDates[0] != followingWednesday { //We expect exactly 3 polls
+		t.Fatalf("Incorrect Wednesday poll date. Expected: %v; actual: %v", followingWednesday, pollDates[0])
+	}
+	if pollDates[1] != followingThursday { //We expect exactly 3 polls
+		t.Fatalf("Incorrect Thursday poll date. Expected: %v; actual: %v", followingThursday, pollDates[1])
+	}
+	if pollDates[2] != followingFriday { //We expect exactly 3 polls
+		t.Fatalf("Incorrect Friday poll date. Expected: %v; actual: %v", followingFriday, pollDates[2])
+	}
+}
+
+func Test_MealDistributionDates_OnWednesday(t *testing.T) {
+	randomWednesday := time.Date(2026, 8, 5, 0, 0, 0, 0, time.UTC)
+	followingWednesday := time.Date(2026, 8, 5, 0, 0, 0, 0, time.UTC)
+	followingThursday := time.Date(2026, 8, 8, 0, 0, 0, 0, time.UTC)
+	followingFriday := time.Date(2026, 8, 9, 0, 0, 0, 0, time.UTC)
+
+	pollDates := nextDistributionDates(randomWednesday)
+
+	if len(pollDates) != 3 { //We expect exactly 3 polls
+		t.Fatalf("Incorrect poll count. Expected: %v; actual: %v", 3, len(pollDates))
+	}
+	if pollDates[0] != followingWednesday { //We expect exactly 3 polls
+		t.Fatalf("Incorrect Wednesday poll date. Expected: %v; actual: %v", followingWednesday, pollDates[0])
+	}
+	if pollDates[1] != followingThursday { //We expect exactly 3 polls
+		t.Fatalf("Incorrect Thursday poll date. Expected: %v; actual: %v", followingThursday, pollDates[1])
+	}
+	if pollDates[2] != followingFriday { //We expect exactly 3 polls
+		t.Fatalf("Incorrect Friday poll date. Expected: %v; actual: %v", followingFriday, pollDates[2])
+	}
+}
+
+func Test_MealDistributionDates_OnSunday(t *testing.T) {
+	randomSunday := time.Date(2026, 8, 2, 0, 0, 0, 0, time.UTC)
+	followingWednesday := time.Date(2026, 8, 5, 0, 0, 0, 0, time.UTC)
+	followingThursday := time.Date(2026, 8, 8, 0, 0, 0, 0, time.UTC)
+	followingFriday := time.Date(2026, 8, 9, 0, 0, 0, 0, time.UTC)
+
+	pollDates := nextDistributionDates(randomSunday)
+
+	if len(pollDates) != 3 { //We expect exactly 3 polls
+		t.Fatalf("Incorrect poll count. Expected: %v; actual: %v", 3, len(pollDates))
+	}
+	if pollDates[0] != followingWednesday { //We expect exactly 3 polls
+		t.Fatalf("Incorrect Wednesday poll date. Expected: %v; actual: %v", followingWednesday, pollDates[0])
+	}
+	if pollDates[1] != followingThursday { //We expect exactly 3 polls
+		t.Fatalf("Incorrect Thursday poll date. Expected: %v; actual: %v", followingThursday, pollDates[1])
+	}
+	if pollDates[2] != followingFriday { //We expect exactly 3 polls
+		t.Fatalf("Incorrect Friday poll date. Expected: %v; actual: %v", followingFriday, pollDates[2])
+	}
+}
+
+func Test_getThisWednesday_OnSunday(t *testing.T) {
+	randomSunday := time.Date(2026, 8, 2, 0, 0, 0, 0, time.UTC)
+	followingWednesday := time.Date(2026, 8, 5, 0, 0, 0, 0, time.UTC)
+
+	nextWednesday := getThisWednesday(randomSunday)
+
+	if followingWednesday != nextWednesday {
+		t.Fatalf("Incorrect Wednesday date. Expected: %v; actual: %v", followingWednesday, nextWednesday)
+	}
+}
+
+func Test_getThisWednesday_OnWednesday(t *testing.T) {
+	randomWednesday := time.Date(2026, 8, 5, 0, 0, 0, 0, time.UTC)
+	followingWednesday := time.Date(2026, 8, 5, 0, 0, 0, 0, time.UTC)
+
+	nextWednesday := getThisWednesday(randomWednesday)
+
+	if followingWednesday != nextWednesday {
+		t.Fatalf("Incorrect Wednesday date. Expected: %v; actual: %v", followingWednesday, nextWednesday)
+	}
+}
+
+func Test_getThisWednesday_OnThursday(t *testing.T) {
+	randomThursday := time.Date(2026, 8, 6, 0, 0, 0, 0, time.UTC)
+	thisWednesdayExpected := time.Date(2026, 8, 5, 0, 0, 0, 0, time.UTC)
+
+	thisWednesday := getThisWednesday(randomThursday)
+
+	if thisWednesday != thisWednesdayExpected {
+		t.Fatalf("Incorrect Wednesday date. Expected: %v; actual: %v", thisWednesdayExpected, thisWednesday)
+	}
+}
