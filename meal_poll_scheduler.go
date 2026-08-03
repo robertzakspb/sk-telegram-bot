@@ -53,8 +53,9 @@ func SendMealDistributionEnrolmentPoll() error {
 		if message != nil {
 			fmt.Println("Message returned by the Telegram API: ",message)
 		}
-
 	}
+
+	fmt.Println("Successfully sent the meal distribution poll")
 
 	return nil
 }

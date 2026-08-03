@@ -42,6 +42,7 @@ func YandexCFHandler(ctx context.Context, request []byte) ([]byte, error) {
 }
 
 func cloudTriggerHandler(payload CloudTriggerPayload) {
+	fmt.Println("Starting to process the trigger payload")
 	switch payload.Details.Payload {
 	case "generateSKMealDistributionPolls":
 		err := SendMealDistributionEnrolmentPoll()

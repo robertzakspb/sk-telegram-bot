@@ -55,6 +55,8 @@ func SendDriverEnrolmentPoll() error {
 		fmt.Println(message)
 	}
 
+	fmt.Println("Successfully sent the driver's poll")
+
 	return nil
 }
 
